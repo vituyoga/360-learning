@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JWT Connection</title>
+</head>
+<body>
+  <h1>Welcome to the Platform</h1>
+  <p id="message"></p>
+
+  <script>
+    // Function to decode JWT
+    function parseJwt(token) {
+      try {
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const jsonPayload = decodeURIComponent(
+          atob(base64)
+            .split('')
+            .map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+            .join('')
+        );
+        return JSON.parse(jsonPayload);
+      } catch (e) {
+        return null;
+      }
+    }
+
+    // Extract the token from the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get('token');
+
+    if (token) {
+      // Decode the JWT token
+      const userData = parseJwt(token);
+      if (userData && userData.firstName && userData.lastName) {
+        document.getElementById('message').innerText = `Hello, ${userData.firstName} ${userData.lastName}! Welcome to the platform.`;
+      } else {
+        document.getElementById('message').innerText = 'Invalid token.';
+      }
+    } else {
+      document.getElementById('message').innerText = 'No token provided.';
+    }
+  </script>
+</body>
+</html>
