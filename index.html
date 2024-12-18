@@ -6,7 +6,7 @@
   <title>JWT Connection</title>
 </head>
 <body>
-  <h1>Welcome to the Platform</h1>
+  <h1>Welcome to 360Learning</h1>
   <p id="message"></p>
 
   <script>
@@ -35,7 +35,7 @@
       // Decode the JWT token
       const userData = parseJwt(token);
       if (userData && userData.firstName && userData.lastName) {
-        document.getElementById('message').innerText = `Hello, ${userData.firstName} ${userData.lastName}! Welcome to the platform.`;
+        document.getElementById('message').innerText = `Hello, ${userData.firstName} ${userData.lastName}! Welcome to 360Learning.`;
       } else {
         document.getElementById('message').innerText = 'Invalid token.';
       }
